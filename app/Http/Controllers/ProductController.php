@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        
+
         return ProductCollection::collection(Product::paginate(20));
     }
 
@@ -37,7 +37,7 @@ class ProductController extends Controller
             'final_price' => round((1 - ($request->discount / 100)) * $request->price, 2)
         ]);
 
-            return response([
+            return response()->json([
                 'data' => new ProductResource($product)
             ], 201);
     }
@@ -70,7 +70,7 @@ class ProductController extends Controller
         $product->final_price = round((1 - ($request->discount / 100)) * $request->price, 2);
         $product->save();
 
-            return response([
+            return response()->json([
                 'data' => new ProductResource($product)
             ], 200);
     }
@@ -84,6 +84,8 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete;
-            return response()->json(['message' => 'Product deleted'], 200);
+            return response()->json([
+                'message' => 'Product deleted'
+            ], 200);
     }
 }

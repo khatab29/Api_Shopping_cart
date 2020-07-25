@@ -21,8 +21,8 @@ class ProductResource extends JsonResource
             'discount' => $this->discount,
             'final price' => $this->final_price,
             'links' => [
-             'delete' => route('products.destroy', $this->id),
-             'update' => route('products.update', $this->id),
+                'start shopping' => route('cart.token'),
+                'add to cart' => route('cart.add_product', ['product_id' => $this->id]),
             ]
         ];
     }

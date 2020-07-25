@@ -24,3 +24,15 @@ Route::group(['prefix' => 'products'], function () {
     Route::post('store', 'ProductController@store')->name('products.store');
     Route::put('{product}/update', 'ProductController@update')->name('products.update');
 });
+
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/token', 'CartController@genrateToken')->name('cart.token');
+    Route::post('/{product_id}', 'CartController@addToCart')->name('cart.add_product');
+    Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
+});
+
+Route::group(['prefix' => 'order'], function () {
+    Route::post('/store', 'OrderController@store')->name('order.store');
+    Route::post('/process/{unique_id}', 'PaymentController@processOrder');
+    Route::post('/confirm/{confirmation_code}', 'PaymentController@confirmPayment');
+});

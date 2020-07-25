@@ -24,4 +24,19 @@ class Product extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    /**
+    * Defining many to many realation with Cart model
+    *
+    *
+    */
+    public function carts()
+    {
+        return $this->belongsToMany('App\Cart');
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order');
+    }
 }

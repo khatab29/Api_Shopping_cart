@@ -2,9 +2,10 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\QueryException;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\Response;
 
 trait ApiExceptionTrait
 {
@@ -12,7 +13,7 @@ trait ApiExceptionTrait
     {
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
-                'error' => 'Product Not Found'
+                'error' => 'Not Found'
             ], 404);
         }
 
@@ -21,7 +22,13 @@ trait ApiExceptionTrait
                 'error' => 'Route Is Incorrect'
             ], 404);
         }
-        
+
+        if ($exception instanceof QueryException) {
+            return response()->json([
+            'error' => 'Not Found'
+            ], 404);
+        }
+
         return parent::render($request, $exception);
     }
 }
