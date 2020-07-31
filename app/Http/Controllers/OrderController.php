@@ -6,6 +6,7 @@ use App\Cart;
 use App\Order;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\OrderValidator;
 
 class OrderController extends Controller
@@ -37,15 +38,26 @@ class OrderController extends Controller
         $order->total_price = $cartPriceWithTax;
         $order->status = 'processing';
         $order->save();
-        $order->products()->sync($products);
 
-        $cart->delete();
+        $order->products()->attach($products);
+        Auth::User() ? Auth::User()->products()->attach($products) : "";
+
+        //$cart->delete();
 
             return response()->json([
                 'status' => 'success',
                 'unique_id' => $order->unique_id,
             ]);
+    }
 
-
+    public function destroy(Request $request)
+    {
+        $order = Order::where('unique_id', $request->unique_id)->first();
+        $order->status = 'returned';
+        $order->save();
+        return response()->json([
+            'status' => 'success',
+            'data' => 'order has been canceled',
+        ]);
     }
 }

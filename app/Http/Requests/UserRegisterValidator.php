@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\SupplierRegisterValidator;
 
-class ProductValidator extends FormRequest
+class UserRegisterValidator extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,9 @@ class ProductValidator extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'price' => 'required|numeric',
-            'discount' => 'nullable',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
         ];
     }
 }

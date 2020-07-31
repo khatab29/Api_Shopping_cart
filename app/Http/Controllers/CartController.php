@@ -96,6 +96,7 @@ class CartController extends Controller
 
         return response()->json([
             'status' => 'success',
+            'custmer email' => auth()->user()->email ?? "",
             'cart items' => $cartItems,
             'products Pricing' => $productsWithPrice,
             'total price' => $totalPrice,

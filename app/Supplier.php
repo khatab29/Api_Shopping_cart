@@ -2,16 +2,12 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements JWTSubject
+class Supplier extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -20,40 +16,25 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Defining many to one realation with Product model
      *
-     * @var array
+     *
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
-    * Defining many to many realation with Product model
-    *
-    *
-    */
     public function products()
     {
         return $this->belongsToMany('App\Product');
     }
 
-
-    public function orders()
-    {
-        return $this->hasMany('App\Order');
-    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

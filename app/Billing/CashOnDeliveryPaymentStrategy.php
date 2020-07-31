@@ -17,18 +17,18 @@ class CashOnDeliveryPaymentStrategy implements PaymentStrategyInterface
         $this->shippingFees = 5;
     }
 
- 
-    public function setDiscount($voucherCode)
+
+    public function setDiscount($discountCode)
     {
-        if ($voucherCode == 'A3000') {
+        if ($discountCode == 'A3000') {
             return $this->discount = 10;
         }
             return $this->discount = 0;
     }
     public function charge($amount)
     {
-        $priceAfterDiscount = (round((1 - ($this->discount / 100)) * $amount, 2));
-        $PriceWithShippingFees = (round((1 + ($this->shippingFees / 100)) * $priceAfterDiscount, 2));
+        $priceAfterDiscount = round((1 - ($this->discount / 100)) * $amount, 2);
+        $PriceWithShippingFees = round((1 + ($this->shippingFees / 100)) * $priceAfterDiscount, 2);
 
         return [
             'amount' => $amount,

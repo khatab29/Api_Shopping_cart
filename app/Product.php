@@ -35,8 +35,25 @@ class Product extends Model
         return $this->belongsToMany('App\Cart');
     }
 
+    /**
+     * Defining many to many realation with order model
+     *
+     *
+     */
+
     public function orders()
     {
         return $this->belongsToMany('App\Order');
+    }
+
+    /**
+     * Defining one to many realation with Supplier model
+     *
+     *
+     */
+
+    public function supplier()
+    {
+        return $this->belongsTo('App\Supplier');
     }
 }

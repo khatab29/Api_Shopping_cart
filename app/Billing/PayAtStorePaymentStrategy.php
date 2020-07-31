@@ -15,7 +15,7 @@ class PayAtStorePaymentStrategy implements PaymentStrategyInterface
         $this->discount = 0;
         $this->shippingFees = 0;
     }
-    
+
 
     public function setDiscount($discountCode)
     {
